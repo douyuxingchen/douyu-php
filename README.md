@@ -2,7 +2,7 @@
 
 为PHP的扩展包安装依赖服务的Docker的PHP服务
 
-## 发布镜像过程
+## 发布镜像
 ```bash
 # 编译
 docker build -t douyu-php:latest .
