@@ -1,15 +1,5 @@
 FROM php:7.3-alpine
 
-# 安装必要的依赖
-RUN apk update && apk add --no-cache \
-    curl \
-    php7.3-curl \
-    php7.3-openssl \
-    php7.3-json \
-    php7.3-phar \
-    php7.3-dom \
-    php7.3-mbstring
-
 # 下载并安装 Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
