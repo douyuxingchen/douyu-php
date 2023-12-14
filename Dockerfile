@@ -1,5 +1,35 @@
 FROM php:7.3-alpine
 
+# 安装常用依赖
+RUN apk update && apk add --no-cache \
+    curl \
+    git \
+    libzip-dev \
+    zlib-dev \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libmcrypt-dev \
+    libxml2-dev \
+    libxslt-dev \
+    openssl-dev \
+    openssh \
+    bash \
+    redis \
+    $PHPIZE_DEPS \
+    && docker-php-ext-install \
+    bcmath \
+    pdo \
+    pdo_mysql \
+    zip \
+    gd \
+    soap \
+    sockets \
+    opcache \
+    xsl \
+    && pecl install redis \
+    && docker-php-ext-enable redis
+
 # 下载并安装 Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
