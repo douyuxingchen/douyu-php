@@ -12,19 +12,37 @@
 - **高度重合性**: 这个镜像不仅仅是一个普通的 PHP 环境，更是一个与现有企业项目高度重合的环境。这意味着你可以放心地使用这个镜像来构建 SDK 依赖，而无需担心环境不一致带来的问题。
 通过使用 `douyu-php`，你能够以一种可靠、一致的方式管理和构建 SDK 的依赖，保持与企业项目环境的高度一致性。这将帮助提高开发效率，并大大降低由于环境不一致性而引起的问题。
 
-## 镜像构建与发布
+## 基本使用
+
+### 安装Composer依赖
+您可以使用以下命令，在任意项目的根目录为项目或扩展包下载依赖
 ```bash
-# 编译
-docker build -t douyu-php:latest .
+docker run -it --rm -v "$(pwd)":/www jefferyjob/douyu-php composer install
+```
 
-# 重命名
-docker tag douyu-php:latest jefferyjob/douyu-php:latest
+### 本地cli运行
+请将以下方法配置到Mac系统中 `~/.zshrc` 文件后，刷新 `source ~/.zshrc` 即可使用
+```bash
+php() {
+    tty=
+    tty -s && tty=--tty
+    docker run \
+        $tty \
+        --interactive \
+        --rm \
+        --volume $PWD:/www:rw \
+        --workdir /www \
+        jefferyjob/douyu-php php "$@"
+}
+```
 
-# 登陆docker
-docker login -u jefferyjob
-
-# 发布docker镜像
-docker push jefferyjob/douyu-php:latest
+测试如下
+```bash
+libin@bogon ~ % php -v
+PHP 7.3.33 (cli) (built: Mar 17 2022 17:55:03) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.3.33, Copyright (c) 1998-2018 Zend Technologies
+    with Zend OPcache v7.3.33, Copyright (c) 1999-2018, by Zend Technologies
 ```
 
 ## 使用指南
